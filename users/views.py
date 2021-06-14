@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
 
-from users.forms import UserLoginForm, UserRegisterForm
+from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 # Create your views here.
 
@@ -44,7 +44,13 @@ def register(request):
 
 
 def profile(request):
-    return render(request, 'users/profile.html')
+    form = UserProfileForm(instance=request.user)
+    context = {
+        'title': 'GeekShop - Профиль',
+        'form': form
+    }
+    return render(request, 'users/profile.html', context)
+
 
 def logout(request):
     auth.logout(request)
